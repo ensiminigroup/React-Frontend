@@ -1,16 +1,18 @@
 import React from 'react'
-import HomeImage from './HomeImage/HomeImage'
-import { HomeContainer } from './HomeStyles'
-import MissionAndVision from './MissionAndVision/MissionAndVision'
-import OurTeam from './OurTeam/OurTeam'
+import { Page } from 'Css/PageStyles'
+import SectionOne from './Sections/SectionOne/SectionOne'
+import SectionTwo from './Sections/SectionTwo/SectionTwo'
+import SectionThree from './Sections/SectionThree/SectionThree'
+import FeaturedProperties from 'components/FeaturedProperties/FeaturedProperties'
 
 const Home = () => {
   return (
-    <HomeContainer>
-      <HomeImage/>
-      <MissionAndVision/>
-      <OurTeam/>
-    </HomeContainer>
+    <Page>
+      <SectionOne/>
+      <SectionTwo/>
+      <FeaturedProperties/>
+      <SectionThree/>
+    </Page>
   )
 }
 
