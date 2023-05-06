@@ -1,36 +1,17 @@
 import styled from "styled-components";
-import { mainThemeColor, redColor, whiteColor } from "../../Css/Variables";
+import { mainColor, secondaryColor } from "../CssVariables/Index";
 
 export const ButtonField = styled.button`
-  background-color: ${(props) =>
-    props.btnColor === "danger" ? redColor : mainThemeColor};
+  background-color: ${mainColor};
   color: white;
-  width: ${(props) => (props.size === "large" ? "100%" : "auto")};
-  min-height: 30px;
+  width: 100%;
+  margin: 15px;
+  min-height: 40px;
   border: none;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 10px;
-  span {
-    margin-left: 1px;
-  }
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 15px;
   font-weight: 700;
   &:hover {
-    background-color: ${(props) =>
-      props.btnColor === "normal"
-        ? "rgba(71,91,232,0.8)"
-        : "rgba(255, 39, 0,0.8)"};
-    cursor: pointer;
+    background-color: ${secondaryColor};
   }
-`;
-
-export const text = styled.p`
-  font-size: ${(props) => (props.size === "large" ? "auto" : "12px")};
-  color: ${whiteColor};
-  margin: 0;
 `;

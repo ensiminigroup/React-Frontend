@@ -1,21 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { FiSearch } from "react-icons/fi";
 
-import { secondaryThemeColor } from "../../Css/Variables";
 import * as styled from "./InputFieldStyles";
 
-const InputField = ({
-  label,
-  onChangeFunc,
-  inputValue,
-  isSearch,
-  handleOnKeyEnter,
-  backgroundColor,
-  hasFloatingLabel,
-  size,
-  isRequired
-}) => {
+const InputField = ({ label, onChangeFunc, inputValue }) => {
   const [hovered, setHovered] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const handleMouseLeave = () => {
@@ -30,71 +19,44 @@ const InputField = ({
       setHovered(false);
     }
   };
-  const handleKeyDown = (eventValue) => {
-    if (eventValue === "Enter" && handleOnKeyEnter !== null) handleOnKeyEnter();
-    setHovered(true);
-  };
   useEffect(() => {
     if (inputValue === "") setHovered(false);
   }, [inputValue]);
 
-  const inputType = (label) => {
-    if (label.toLowerCase() === "password") {
-      if (showPassword) return undefined;
-      else return "password";
-    } else if (label === "max price(USD)") return "number";
-    else if (label === "min price(USD)") return "number";
-    else if (label === "min bathrooms") return "number";
-    else if (label === "max bathrooms") return "number";
-    else if (label === "min bedrooms") return "number";
-    else if (label === "max bedrooms") return "number";
-    else return undefined;
-  };
-
+  const passwordVisibility = (label) => {
+    if(label.toLowerCase() === 'password'){
+      if(showPassword) return null
+      else return 'password'
+    }else return null
+  }
   return (
-    <styled.InputContainer inputSize={size}>
-      {hasFloatingLabel && (
-        <styled.InputLabel hovered={hovered} backgroundColor={backgroundColor}>
-          {label}
-        </styled.InputLabel>
-      )}
+    <styled.InputContainer>
+      <styled.InputLabel hovered={hovered}>{label}</styled.InputLabel>
       {label.toLowerCase() === "password" &&
         (showPassword ? (
           <BsEyeSlash
-            className="input-icon"
+            className="label-password-icon"
             fontSize={22}
             onClick={() => setShowPassword(!showPassword)}
           />
         ) : (
           <BsEye
-            className="input-icon"
+            className="label-password-icon"
             fontSize={22}
             onClick={() => setShowPassword(!showPassword)}
           />
         ))}
-      {isSearch && (
-        <FiSearch
-          fontSize={22}
-          color={secondaryThemeColor}
-          className="input-icon"
-        />
-      )}
       <styled.Input
         onChange={(e) => onChangeFunc(e.target.value)}
         value={inputValue}
         spellCheck="false"
         autoCorrect="off"
         autoComplete="off"
-        placeholder={hasFloatingLabel ? undefined : label}
-        type={inputType(label)}
+        type={passwordVisibility(label)}
         onMouseEnter={() => setHovered(true)}
-        onKeyDown={(e) => handleKeyDown(e.key)}
+        onKeyDown={() => setHovered(true)}
         onKeyUp={handleKeyUp}
         onMouseLeave={handleMouseLeave}
-        backgroundColor={backgroundColor}
-        hasFloatingLabel={hasFloatingLabel}
-        inputSize={size}
-        isRequired={isRequired}
       />
     </styled.InputContainer>
   );

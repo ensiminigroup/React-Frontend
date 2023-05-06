@@ -1,88 +1,61 @@
 import styled from "styled-components";
-import { mainThemeColor, redColor, shadow, whiteColor } from "../../Css/Variables";
+import { mainColor, secondaryColor } from "../../components/CssVariables/Index";
 
-export const SignupWrapper = styled.div`
+export const SignUpContainer = styled.div`
   display: flex;
+  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  justify-content: start;
-  flex-direction: column;
-  width: 100%;
-  //min-height: 84vh;
+  min-height: 90vh;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  @media (max-width: 1600px) {
+    min-height: 70vh;
+  }
 `;
-
-export const SignupForm = styled.form`
-  width: 100%;
-  height: 100%;
+export const SignUpFormWrapper = styled.div`
   display: flex;
-  align-items: flex-start;
-  justify-content: start;
+  justify-content: center;
   flex-direction: column;
-  gap: 10px;
-`;
-
-export const SignupFormWrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: start;
-  flex-direction: column;
-  background-color: ${whiteColor};
-  width: 450px;
-  margin-top: 20px;
-  margin-bottom: 50px;
-  padding: 20px 20px;
-  border-radius: 7px;
-  box-shadow: ${shadow};
+  align-items: center;
+  width: 800px;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.39);
+  border-radius: 10px;
+  @media (max-width: 1600px) {
+    width: 500px;
+  }
   @media (max-width: 600px) {
-    width: 80%;
-    text-align: center;
+    width: 400px;
   }
-  @media (max-width: 500px) {
-    padding: 15px;
+  @media (max-width: 430px) {
+    width: 300px;
+  }
+  @media (max-width: 350px) {
+    width: 280px;
   }
 `;
-export const SignupHeaderText = styled.p`
-  color: black;
-  font-size: 22px;
-  font-weight: 800;
-  margin:10px 0;
-`;
-export const SignupText = styled.p`
-  font-size: 13px;
-`;
-export const validationErrorWrapper = styled.ul`
+export const SignUpForm = styled.form`
   display: flex;
-  align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-  text-align: left;
-  color: ${redColor};
-  font-size: 13px;
-  margin-bottom: 7px;
-`;
-export const validationErrorText = styled.span`
-  text-align: center;
-  color: ${redColor};
-  font-size: 13px;
-  margin-bottom: 7px;
-`;
-export const validationErrorGuidelines = styled.span`
-  text-align: center;
-  color: ${redColor};
-  font-size: 14px;
-  font-weight:bold;
-`;
-export const SignupTextSpan = styled.span`
-  font-size: 13px;
-  color: ${mainThemeColor};
-  text-decoration: underline;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-export const SignupBtnContainer = styled.div`
-  display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
   width: 100%;
+  padding: 15px;
+`;
+export const SignUpFormHeaderText = styled.p`
+  font-size: 25px;
+  font-weight: bold;
+  color: ${mainColor};
+`;
+export const SignUpFormText = styled.p`
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+`;
+export const SignUpFormSpan = styled.span`
+  color: ${secondaryColor};
+  &:hover{
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;

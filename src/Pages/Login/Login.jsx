@@ -1,164 +1,51 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import Button from "../../components/Button/Button";
+
 import InputField from "../../components/InputField/InputField";
-import { backgroundColor } from "../../Css/Variables";
-import {
-  emailValidator,
-  passwordGuideLines,
-  passwordValidator,
-} from "../../Utils/utils";
 import * as styled from "./LoginStyles";
-import Spinner from "../../components/Spinner/Spinner";
-import { postResource } from "../../HttpServices/Post/postData";
-import NotificationBar from "../../components/Notifications/NotificationBar";
-import { useContext } from "react";
-import { AppContext } from "Context/AppContext";
 
 const Login = () => {
-  const [postResponse, setPostResponse] = useState({
-    message: "",
-    type: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const notificationBarRef = useRef(null);
-  const [loginUserData, setLoginUserData] = useState({
+  const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
-  const{setAccessToken}= useContext(AppContext)
-  const [isPasswordValidationError, setIsPasswordValidationError] =
-    useState(false);
-  const [isEmailValidationError, setIsEmailValidationError] = useState(false);
-  const navigate = useNavigate();
-  const handleOnChangePassword = (value) => {
-    setLoginUserData({
-      ...loginUserData,
-      password: value,
-    });
-  };
-  const handleOnChangeEmail = (value) => {
-    setLoginUserData({
-      ...loginUserData,
-      email: value,
-    });
-  };
-  const handlePost = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    if (!isEmailValidationError && !isPasswordValidationError) {
-      setIsLoading(true);
-      if (loginUserData.email !== "" && loginUserData.password !== "") {
-        const userData = {
-          Email: loginUserData.email,
-          Password: loginUserData.password,
-        };
-        postResource(
-          "login",
-          userData,
-          null,
-          setIsLoading,
-          setPostResponse,
-          postResponse
-        );
-        setLoginUserData({ ...loginUserData, email: "", password: "" });
-        setAccessToken("newtokenbby")
-      } else if (loginUserData.email === "" && loginUserData.password !== "") {
-        setIsEmailValidationError(true);
-        setIsLoading(false);
-      } else if (loginUserData.email !== "" && loginUserData.password === "") {
-        setIsPasswordValidationError(true);
-        setIsLoading(false);
-      } else if (loginUserData.email === "" && loginUserData.password === "") {
-        setIsEmailValidationError(true);
-        setIsPasswordValidationError(true);
-        setIsLoading(false);
-      }
-    }
+    console.log(loginData);
+    setLoginData({ ...loginData, email: "", password: "" });
   };
-  useEffect(() => {
-    if (loginUserData.password !== "") {
-      passwordValidator(setIsPasswordValidationError, loginUserData.password);
-    }
-  }, [loginUserData.password]);
-  useEffect(() => {
-    if (loginUserData.email !== "") {
-      emailValidator(setIsEmailValidationError, loginUserData.email);
-    }
-  }, [loginUserData.email]);
-  useEffect(() => {
-    if (postResponse && notificationBarRef.current) {
-      notificationBarRef.current.showPopup();
-    }
-  }, [postResponse, notificationBarRef]);
+  const navigate = useNavigate();
   return (
-    <styled.LoginWrapper>
+    <styled.LoginContainer>
       <styled.LoginFormWrapper>
-        <styled.LoginForm onSubmit={(e) => handlePost(e)}>
-          <styled.LoginHeaderText>Login</styled.LoginHeaderText>
+        <styled.LoginForm spellCheck="false">
+          <styled.LoginFormHeaderText>Login</styled.LoginFormHeaderText>
           <InputField
-            label={"Email"}
-            onChangeFunc={handleOnChangeEmail}
-            inputValue={loginUserData.email}
-            isSearch={false}
-            backgroundColor={backgroundColor}
-            handleOnKeyEnter={null}
-            hasFloatingLabel={true}
-            size={"large"}
+            label={"email"}
+            onChangeFunc={(value) =>
+              setLoginData({ ...loginData, email: value })
+            }
+            inputValue={loginData.email}
           />
-          {isEmailValidationError && (
-            <styled.validationErrorText>
-              {"please enter valid email address"}
-            </styled.validationErrorText>
-          )}
           <InputField
-            label={"Password"}
-            onChangeFunc={handleOnChangePassword}
-            inputValue={loginUserData.password}
-            isSearch={false}
-            backgroundColor={backgroundColor}
-            handleOnKeyEnter={null}
-            hasFloatingLabel={true}
-            size={"large"}
+            label={"password"}
+            onChangeFunc={(value) =>
+              setLoginData({ ...loginData, password: value })
+            }
+            inputValue={loginData.password}
           />
-          {isPasswordValidationError && (
-            <styled.validationErrorWrapper>
-              <styled.validationErrorGuidelines>
-                {"password guidelines:"}
-              </styled.validationErrorGuidelines>
-              {passwordGuideLines.map((guideline) => (
-                <li key={guideline}>
-                  <span>{guideline}</span>
-                </li>
-              ))}
-            </styled.validationErrorWrapper>
-          )}
-          <styled.LoginText>
-            you don't have an account?{" "}
-            <styled.LoginTextSpan onClick={() => navigate("/signup")}>
-              please signup here
-            </styled.LoginTextSpan>
-          </styled.LoginText>
-          <styled.LoginBtnContainer>
-            <Button
-              onClickFunc={undefined}
-              buttonText={isLoading ? <Spinner/> : "login"}
-              type={"submit"}
-              color={"normal"}
-              size={"large"}
-            />
-          </styled.LoginBtnContainer>
+          <Button buttonText={"Login"} onClickFunc={(e) => handleLogin(e)} />
+          <styled.LoginFormText>
+            Do you have an account?{" "}
+            <styled.LoginFormSpan onClick={() => navigate("/signup")}>
+              Create an Account
+            </styled.LoginFormSpan>
+          </styled.LoginFormText>
         </styled.LoginForm>
       </styled.LoginFormWrapper>
-      {postResponse.message && (
-        <NotificationBar
-          message={postResponse.message}
-          type={postResponse.type}
-          ref={notificationBarRef}
-        />
-      )}
-    </styled.LoginWrapper>
+    </styled.LoginContainer>
   );
 };
 
