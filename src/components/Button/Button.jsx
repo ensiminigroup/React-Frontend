@@ -1,8 +1,12 @@
 import React from "react";
-import { ButtonField } from "./ButtonStyles";
+import * as styled from "./ButtonStyles";
 
-const Button = ({ buttonText, onClickFunc }) => {
-  return <ButtonField onClick={onClickFunc}>{buttonText}</ButtonField>;
+const Button = ({ buttonText, onClickFunc, type, size, color }) => {
+  return (
+    <styled.ButtonField onClick={onClickFunc} type={type} size={size} btnColor={color}>
+      <styled.text size={size}>{buttonText}</styled.text>
+    </styled.ButtonField>
+  );
 };
 
 export default Button;
